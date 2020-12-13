@@ -29,15 +29,15 @@ func TestFindCommand(t *testing.T) {
 		},
 	}
 
-	if _, ok := c.findCommand("a"); !ok {
+	if _, ok := c.FindCommand("a"); !ok {
 		t.Fatalf("Expected command \"a\" to be found")
 	}
 
-	if _, ok := c.findCommand("bravo"); !ok {
+	if _, ok := c.FindCommand("bravo"); !ok {
 		t.Fatalf("Expected command \"bravo\" to be found")
 	}
 
-	if _, ok := c.findCommand("charlie"); !ok {
+	if _, ok := c.FindCommand("charlie"); !ok {
 		t.Fatalf("Expected command \"charlie\" to be found")
 	}
 }

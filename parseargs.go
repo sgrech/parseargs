@@ -13,7 +13,7 @@ type command struct {
 	value  string
 }
 
-func (c commands) findCommand(opt string) (value string, ok bool) {
+func (c commands) FindCommand(opt string) (value string, ok bool) {
 	for _, comm := range c {
 		if comm.option == opt {
 			return comm.value, true
