@@ -47,8 +47,8 @@ func TestParseLongOption(t *testing.T) {
 		t.Fatalf("Expected %s but got %s", "alpha", opt)
 	}
 
-	if opt, val := parseLongOption("beta=betaval"); opt != "beta" && val != "betaval" {
-		t.Fatalf("Expected %s option and %s value but got %s option && %s value", "beta", "betaval", opt, val)
+	if opt, val := parseLongOption("bravo=bravoval"); opt != "bravo" && val != "bravoval" {
+		t.Fatalf("Expected %s option and %s value but got %s option && %s value", "bravo", "bravoval", opt, val)
 	}
 }
 
@@ -82,7 +82,146 @@ func TestParseArgs(t *testing.T) {
 		if cmds[0].option != "a" {
 			t.Fatalf("Expected command with option \"a\"  but got \"%s\"", cmds[0].option)
 		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
 
+	if cmds, err := ParseArgs("-a -b"); err == nil {
+		if len(cmds) != 2 {
+			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "a" {
+			t.Fatalf("Expected command with option \"a\"  but got \"%s\"", cmds[0].option)
+		}
+
+		if cmds[1].option != "b" {
+			t.Fatalf("Expected command with option \"b\"  but got \"%s\"", cmds[1].option)
+		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	if cmds, err := ParseArgs("-ab"); err == nil {
+		if len(cmds) != 2 {
+			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "a" {
+			t.Fatalf("Expected command with option \"a\"  but got \"%s\"", cmds[0].option)
+		}
+
+		if cmds[1].option != "b" {
+			t.Fatalf("Expected command with option \"b\"  but got \"%s\"", cmds[1].option)
+		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	if cmds, err := ParseArgs("-ab -c"); err == nil {
+		if len(cmds) != 3 {
+			t.Fatalf("Expected slice of len 3 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "a" {
+			t.Fatalf("Expected command with option \"a\"  but got \"%s\"", cmds[0].option)
+		}
+
+		if cmds[1].option != "b" {
+			t.Fatalf("Expected command with option \"b\"  but got \"%s\"", cmds[1].option)
+		}
+
+		if cmds[2].option != "c" {
+			t.Fatalf("Expected command with option \"c\"  but got \"%s\"", cmds[2].option)
+		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	if cmds, err := ParseArgs("--alpha"); err == nil {
+		if len(cmds) != 1 {
+			t.Fatalf("Expected slice of len 1 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "alpha" {
+			t.Fatalf("Expected command with option \"alpha\"  but got \"%s\"", cmds[0].option)
+		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	if cmds, err := ParseArgs("--alpha --bravo"); err == nil {
+		if len(cmds) != 2 {
+			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "alpha" {
+			t.Fatalf("Expected command with option \"alpha\"  but got \"%s\"", cmds[0].option)
+		}
+
+		if cmds[1].option != "bravo" {
+			t.Fatalf("Expected command with option \"bravo\"  but got \"%s\"", cmds[1].option)
+		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	if cmds, err := ParseArgs("-ab --charlie"); err == nil {
+		if len(cmds) != 3 {
+			t.Fatalf("Expected slice of len 3 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "a" {
+			t.Fatalf("Expected command with option \"a\"  but got \"%s\"", cmds[0].option)
+		}
+
+		if cmds[1].option != "b" {
+			t.Fatalf("Expected command with option \"b\"  but got \"%s\"", cmds[1].option)
+		}
+
+		if cmds[2].option != "charlie" {
+			t.Fatalf("Expected command with option \"charlie\"  but got \"%s\"", cmds[2].option)
+		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	if cmds, err := ParseArgs("--alpha=go"); err == nil {
+		if len(cmds) != 1 {
+			t.Fatalf("Expected slice of len 1 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "alpha" {
+			t.Fatalf("Expected command with option \"alpha\"  but got \"%s\"", cmds[0].option)
+		}
+
+		if cmds[0].value != "go" {
+			t.Fatalf("Expected command with value \"go\"  but got \"%s\"", cmds[0].value)
+		}
+	} else {
+		t.Fatalf("Unexpected error %v", err)
+	}
+
+	if cmds, err := ParseArgs("--alpha=go --beta=go"); err == nil {
+		if len(cmds) != 2 {
+			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
+		}
+
+		if cmds[0].option != "alpha" {
+			t.Fatalf("Expected command with option \"alpha\"  but got \"%s\"", cmds[0].option)
+		}
+
+		if cmds[0].value != "go" {
+			t.Fatalf("Expected command with value \"go\"  but got \"%s\"", cmds[0].value)
+		}
+
+		if cmds[1].option != "beta" {
+			t.Fatalf("Expected command with option \"beta\"  but got \"%s\"", cmds[1].option)
+		}
+
+		if cmds[1].value != "go" {
+			t.Fatalf("Expected command with value \"go\"  but got \"%s\"", cmds[1].value)
+		}
 	} else {
 		t.Fatalf("Unexpected error %v", err)
 	}

@@ -43,7 +43,6 @@ func parseShortOption(s string) (options []string) {
 
 func ParseArgs(args string) (c commands, err error) {
 	f := strings.Fields(args)
-	fmt.Println(f)
 	var comms commands
 	for _, arg := range f {
 		if strings.HasPrefix(arg, "--") {
@@ -54,7 +53,6 @@ func ParseArgs(args string) (c commands, err error) {
 			})
 		} else if strings.HasPrefix(arg, "-") {
 			opts := parseShortOption(stripDashes(arg))
-			fmt.Println(arg, strings.HasPrefix(arg, "-"), opts)
 			for _, opt := range opts {
 				comms = append(comms, command{
 					option: opt,
