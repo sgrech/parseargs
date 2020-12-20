@@ -32,7 +32,7 @@ func TestFindCommand(t *testing.T) {
 }
 
 func TestParseArgs(t *testing.T) {
-	if cmds, err := ParseArgs("-a"); err == nil {
+	if cmds, err := ParseArgs([]string{"/process/main", "-a"}); err == nil {
 		if len(cmds) != 1 {
 			t.Fatalf("Expected slice of len 1 but got %d", len(cmds))
 		}
@@ -44,7 +44,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("-a -b"); err == nil {
+	if cmds, err := ParseArgs([]string{"process/main", "-a", "-b"}); err == nil {
 		if len(cmds) != 2 {
 			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
 		}
@@ -60,7 +60,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("-ab"); err == nil {
+	if cmds, err := ParseArgs([]string{"process/main", "-ab"}); err == nil {
 		if len(cmds) != 2 {
 			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
 		}
@@ -76,7 +76,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("-ab -c"); err == nil {
+	if cmds, err := ParseArgs([]string{"process/main", "-ab", "-c"}); err == nil {
 		if len(cmds) != 3 {
 			t.Fatalf("Expected slice of len 3 but got %d", len(cmds))
 		}
@@ -96,7 +96,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("--alpha"); err == nil {
+	if cmds, err := ParseArgs([]string{"process/main", "--alpha"}); err == nil {
 		if len(cmds) != 1 {
 			t.Fatalf("Expected slice of len 1 but got %d", len(cmds))
 		}
@@ -108,7 +108,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("--alpha --bravo"); err == nil {
+	if cmds, err := ParseArgs([]string{"process/main", "--alpha", "--bravo"}); err == nil {
 		if len(cmds) != 2 {
 			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
 		}
@@ -124,7 +124,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("-ab --charlie"); err == nil {
+	if cmds, err := ParseArgs([]string{"process/main", "-ab", "--charlie"}); err == nil {
 		if len(cmds) != 3 {
 			t.Fatalf("Expected slice of len 3 but got %d", len(cmds))
 		}
@@ -144,7 +144,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("--alpha=go"); err == nil {
+	if cmds, err := ParseArgs([]string{"/process/main", "--alpha=go"}); err == nil {
 		if len(cmds) != 1 {
 			t.Fatalf("Expected slice of len 1 but got %d", len(cmds))
 		}
@@ -160,7 +160,7 @@ func TestParseArgs(t *testing.T) {
 		t.Fatalf("Unexpected error %v", err)
 	}
 
-	if cmds, err := ParseArgs("--alpha=go --beta=go"); err == nil {
+	if cmds, err := ParseArgs([]string{"/process/main", "--alpha=go", "--beta=go"}); err == nil {
 		if len(cmds) != 2 {
 			t.Fatalf("Expected slice of len 2 but got %d", len(cmds))
 		}
