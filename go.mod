@@ -1,3 +1,3 @@
-module github.com/sgrech/parse-args
+module github.com/sgrech/parseargs
 
 go 1.15
